@@ -1,14 +1,14 @@
 #ifndef COMMON_H
 #define COMMON_H
-typedef unsigned int u32int;
-typedef			 int s32int;
-typedef unsigned short u16int;
-typedef			 short s16int;
-typedef unsigned char  u8int;
-typedef			 char  s8int;
+typedef unsigned int uint32;
+typedef			 int sint32;
+typedef unsigned short uint16;
+typedef			 short sint16;
+typedef unsigned char  uint8;
+typedef			 char  sint8;
 
-void outb(u16int port,u8int value);//output some value on port
-u8int inb(u16int port);//read value from port
-u16int inw(u16int port);
+void outb(uint16 port,uint8 value);//output some value on port
+uint8 inb(uint16 port);//read value from port
+uint16 inw(uint16 port);
 
 #endif
