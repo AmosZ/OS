@@ -16,3 +16,4 @@ void outb(u16int port,u8int value)
 	//volatile : our assembly statement must execute where we put it,keep it from moving, deleting and all
 	asm volatile ("outb %1,%0": : "dN"(port), "a" (value));
 }
+//sdf
