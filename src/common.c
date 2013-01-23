@@ -49,20 +49,20 @@ void outb(uint16 port,uint8 value)
 		"dN(port)" : port is copied to register d  and Constant in range 0 to 255	   
 		"a"(value) : value is copied to register a
 	*/
-	asm volatile ("outb %1,%0": : "dN"(port), "a" (value));
+	__asm__ __volatile__ ("outb %1,%0": : "dN"(port), "a" (value));
 }
 
 uint8 intb(uint16 port)
 {
 	uint8 ret;
-	asm volatile("inb %1,%0": "=a"(ret) : "dN"(port));
+	__asm__ __volatile__("inb %1,%0": "=a"(ret) : "dN"(port));
 	return ret;
 }
 
 uint16 inw(uint16 port)
 {
 	uint16 ret;
-	asm volatile("inw %1,%0" : "=a"(ret):"dN"(port));
+	__asm__ __volatile__("inw %1,%0" : "=a"(ret):"dN"(port));
 	return ret;
 }
 
