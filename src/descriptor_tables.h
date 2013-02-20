@@ -9,7 +9,7 @@
   Descrptor used for System Segments:
 					Granularity					Access
   |31---------24 | 23 22 21 20 19---------16 | 15-------11-8| 7----------0 |
-  | Base[31:24]  | G  X  O  AVL LIMIT[19:16] |  P DPL 1 Type|  Base[23:16] | 4 Bytes
+  | Base[31:24]  | G  D  O  AVL LIMIT[19:16] |  P DPL 1 Type|  Base[23:16] | 4 Bytes
   |          Base[15:0]						 |          Limit[15:0]        | 0 Bytes
  ********************************************************
 
@@ -28,7 +28,7 @@ struct gdt_entry_struct//From low address to high?
 	uint16 limit_low;	//the lower 16bits of the limit
 	uint16 base_low;	//the lower 16 bits of the base;
 	uint8  base_middle; //the middle 8 bits of the base;
-	uint8  access;		//Access flags
+	uint8  access;		//Access flags [P,DPL,]
 	uint8 granularity;	
 	uint8 base_high;	//the high 8 bits of the base
 } __attribute__ ((packed));

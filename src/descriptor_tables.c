@@ -103,7 +103,7 @@ static void init_gdt()
 		
 		0xffff is meanless;
 	 */
-	gdt_set_gate(1,0,0xffffffff,0x9A,0xCF);//Code segment 0x9A=b1001 1010 0xCF=b11001111 
+	gdt_set_gate(1,0,0xffffffff,0x9A,0xCF);//Code segment 0x9A=b1001 1010 0xCF=b11001111.For kernel level application??? 
 	gdt_set_gate(2,0,0xffffffff,0x92,0xCF);//Data segment
 
 	gdt_set_gate(3,0,0xffffffff,0xFA,0xCF);//user mode code segment;
@@ -124,7 +124,7 @@ static void gdt_set_gate(sint32 num,uint32 base,uint32 limit,uint8 access,uint8 
 	gdt_entries[num].granularity = (limit>>16) & 0x0f; //limit[19:16]
 
 	/*G,X,0,AVL*/
-	gdt_entries[num].granularity |= gran&0xf0;
+	gdt_entries[num].granularity |= gran & 0xf0;
 
 	/*P,DPL,1,TYPE*/
 	gdt_entries[num].access = access;
