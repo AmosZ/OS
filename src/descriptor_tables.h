@@ -35,6 +35,15 @@ struct gdt_entry_struct//From low address to high?
 // We use the attribute 'packed' to tell GCC not to change
 // any of the alignment in the structure.
 
+struct gdt_ptr_struct
+{
+	uint16 limit;	//the upper 16bits of all selector limits(size of table minus one)
+	uint32 base;	//the address of the first gdt_entry_t struct;
+} __attribute__ ((packed));
+
+typedef struct gdt_entry_struct gdt_entry_t;
+
+typedef struct gdt_ptr_struct gdt_ptr_t;
 /*
 
 IDT entry, Interrupt Gates
@@ -43,7 +52,8 @@ Offset 	| 48..63	|	 Offset 16..31	 |	Higher part of the offset.
 P	   	|   47	 	|	 Present	 	 |	can be set to 0 for unused interrupts or for Paging.
 DPL	   	| 45,46	 	|	 Descriptor 	 |	Privilege Level	 Gate call protection. 
 										 |	Specifies which privilege Level the calling Descriptor minimum should have. 
-										 |	So hardware and CPU interrupts can be protected from beeing called out of userspace.
+										 |	So hardware and CPU interrupts can be protected from beeing called out of user
+										 |  space.
 
 S	   	|  44	 	|	 Storage Segment = 0 for interrupt gates.
 Type   	| 40..43	| 	 Gate Type 0..3	 Possible IDT gate types :
@@ -53,6 +63,9 @@ Type   	| 40..43	| 	 Gate Type 0..3	 Possible IDT gate types :
 	0b0111	 0x7	 7	 80286 16-bit trap gate
 	0b1110	 0xE	 14	 80386 32-bit interrupt gate
 	0b1111	 0xF	 15	 80386 32-bit trap gate
+
+Trap and interrupt gate differ from each other only by the treatment of the IF bit ("Interrrupt Enable flag") of the flag register. Interrupts gates put this bit back and prevent thereby the release of further hardware interrupts until the appropriate treatment routine sets the bit again or over an IR T instruction ends. Trap gates do not exert influence on the condition of the IF bit.
+
 
 0	   	| 32..39	| 	 Unused 0..7	 |	Have to be 0.
 Selector| 16..31	| 	 Selector 0..15  |	Selector of the interrupt function (to make sense - the kernel's selector). 
@@ -74,14 +87,6 @@ struct idt_entry_struct
 typedef struct idt_entry_struct idt_entry_t;
 
 
-
-struct gdt_ptr_struct
-{
-	uint16 limit;	//the upper 16bits of all selector limits(size of table minus one)
-	uint32 base;	//the address of the first gdt_entry_t struct;
-} __attribute__ ((packed));
-
-
 struct idt_ptr_struct
 {
 	uint16 limit;
@@ -90,9 +95,6 @@ struct idt_ptr_struct
 
 typedef struct idt_ptr_struct idt_ptr_t;
 
-typedef struct gdt_entry_struct gdt_entry_t;
-
-typedef struct gdt_ptr_struct gdt_ptr_t;
 
 void init_descript_table();
 
