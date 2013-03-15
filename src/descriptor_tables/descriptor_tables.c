@@ -1,8 +1,8 @@
 #include "descriptor_tables.h"
 #include "common.h"
-#include "monitor.h"
 
 extern void gdt_flush(uint32);
+extern void idt_flush(uint32);
 
 static void init_gdt();
 static void gdt_set_gate(sint32,uint32,uint32,uint8,uint8);
@@ -14,7 +14,7 @@ static void idt_set_gate(uint8,uint32,uint16,uint8);
 gdt_entry_t gdt_entries[5];
 gdt_ptr_t gdt_ptr;
 idt_entry_t idt_entries[256];
-idt_entry_t idt_ptr;
+idt_ptr_t idt_ptr;
 
 /*static void gdt_flush(uint32 address)
 {
@@ -44,7 +44,7 @@ static void init_idt()
 {
 	idt_ptr.limit = sizeof(idt_entry_t)*256 - 1;
 	idt_ptr.base = (uint32)&idt_entries;
-	memset(&idt_entries,0,sizeof(idt_entry_t)*256);
+	memset((uint8*)&idt_entries,0,sizeof(idt_entry_t)*256);
 
 	/*
 	   Here are top 32 interrupt/expection handler.

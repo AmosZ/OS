@@ -13,7 +13,8 @@ void monitor_clear();
 
 //Output a null-terminated ASCII string to the monitor
 void monitor_write(char* c);
-
+//Output a uint32 
+void monitor_write_dec(uint32);
 //Update the hardware cursor
 /*
 	Update the hardware cursor

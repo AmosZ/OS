@@ -11,7 +11,7 @@ typedef struct registers
 }registers_t;//32bits,no need for packed attribute
 
 
-
+extern void isr_common_stub();
 extern void isr_handler(registers_t regs);
 extern void isr0();
 //....interface service routine??

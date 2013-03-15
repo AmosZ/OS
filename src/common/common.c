@@ -67,9 +67,32 @@ uint16 inw(uint16 port)
 }
 
 
+/*-------------memory operation---------------------------*/
+void memset(uint8* addr,uint8 val,uint32 length)
+{
+	for(int i=0;i!=length;++i)
+	{
+		*(addr+i) = val;
+	}
+}
 
 
-
+/*-----------------------math----------------------------*/
+uint32 pow(uint32 a,uint32 b)
+{
+	if(b == 0)
+		return 1;
+	else if(b == 1)
+		return a;
+	else
+	{
+		for(int i=1;i!=b;++i)
+		{
+			a*=a;
+		}
+		return a;
+	}
+}
 
 
 

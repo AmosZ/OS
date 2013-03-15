@@ -64,3 +64,21 @@ void monitor_write(char* c)
 		monitor_put(c[i++]);
 	}
 }
+
+void monitor_write_dec(uint32 value)
+{
+	uint8 digit = 0;
+	while(value/=10)
+		digit++;
+	
+	while(digit)
+	{
+		monitor_put(value/pow(10,digit));
+		value -= pow(10,digit);
+		digit--;
+	}
+
+}
+
+
+
